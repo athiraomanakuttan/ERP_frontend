@@ -1,0 +1,5 @@
+import { apiClient } from '@/services/apiClient';
+export interface Payment { _id:string; invoice:any; customer:any; paymentId:string; amountReceived:number; bankCharges:number; netDeposited:number; paymentDate:string; paymentMode:string; paymentReceivedOn:string; depositedTo?:string; referenceId?:string; notes?:string; attachmentName?:string; attachmentDataUrl?:string; createdAt:string; }
+export interface PaymentPayload { invoice: string; paymentId: string; amountReceived: number; bankCharges: number; paymentDate: string; paymentMode: string; paymentReceivedOn: string; depositedTo?: string; referenceId?: string; notes?: string; attachmentName?: string; attachmentDataUrl?: string; }
+export async function createPayment(payload: PaymentPayload) { const { data } = await apiClient.post('/payments', payload); return data.data; }
+export async function listPayments(params: Record<string, any> = {}) { const { data } = await apiClient.get('/payments', { params }); return { items: data.data as Payment[], meta: data.meta }; }

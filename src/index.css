@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+
+  /* Neutral scale - warm stone tones, not the stock slate gray every template uses. */
+  --color-bg: 247 249 252;
+  --color-surface: 255 255 255;
+  --color-surface-hover: 246 248 251;
+  --color-muted: 243 246 250;
+  --color-border: 226 232 240;
+  --color-heading: 15 23 42;
+  --color-body: 71 85 105;
+  --color-subtle: 100 116 139;
+  --color-faint: 148 163 184;
+
+  /* Default primary ramp (indigo) - overwritten at runtime once /settings loads. */
+  --color-primary-50: 238 238 253;
+  --color-primary-100: 224 224 251;
+  --color-primary-200: 199 199 248;
+  --color-primary-300: 165 163 242;
+  --color-primary-400: 129 123 234;
+  --color-primary-500: 98 88 225;
+  --color-primary-600: 79 70 229;
+  --color-primary-700: 61 53 191;
+  --color-primary-800: 49 43 153;
+  --color-primary-900: 38 34 117;
+  --color-primary-950: 20 18 66;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-bg: 10 15 25;
+  --color-surface: 17 24 39;
+  --color-surface-hover: 30 41 59;
+  --color-muted: 30 41 59;
+  --color-border: 51 65 85;
+  --color-heading: 248 250 252;
+  --color-body: 203 213 225;
+  --color-subtle: 148 163 184;
+  --color-faint: 100 116 139;
+}
+
+* {
+  border-color: rgb(var(--color-border));
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  @apply bg-app text-body antialiased font-sans;
+  font-feature-settings: 'ss01' 1;
+}
+
+/* Smooth theme switches without animating everything else on the page. */
+body,
+.theme-transition {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+::selection {
+  background-color: rgb(var(--color-primary-200));
+}
+
+/* Slim, unobtrusive scrollbars that still respect the theme. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-border));
+  border-radius: 9999px;
+}
