@@ -14,7 +14,17 @@ import { scrollToFirstError,zodFieldErrors } from '@/utils/validation';
 const empty:CustomerPayload={customerType:'business',primaryContactName:'',contactNumber:'',companyName:'',email:'',vatNumber:'',currency:'OMR'};
 export function CustomerFormPage(){ const {id}=useParams(); const nav=useNavigate(); const settings=useQuery({queryKey:['app-settings'],queryFn:getAdminSettings}); const [form,setForm]=useState<CustomerPayload>(empty); const [errors,setErrors]=useState<Record<string,string>>({});
  const existing=useQuery({queryKey:['customer',id],queryFn:()=>getCustomer(id!),enabled:!!id});
- useEffect(()=>{if(!id&&settings.data?.defaultCurrency)setForm(f=>({...f,currency:settings.data!.defaultCurrency}));},[id,settings.data]);
+ useEffect(() => {
+  const defaultCurrency = settings.data?.defaultCurrency;
+
+  if (!id && defaultCurrency) {
+    setForm((f) => ({
+      ...f,
+      currency: defaultCurrency
+    }));
+  }
+}, [id, settings.data?.defaultCurrency]);
+
  useEffect(()=>{if(existing.data)setForm({...existing.data,companyName:existing.data.companyName||'',vatNumber:existing.data.vatNumber||''});},[existing.data]);
  const mut=useMutation({mutationFn:(p:CustomerPayload)=>id?updateCustomer(id,p):createCustomer(p),onSuccess:()=>nav('/customers')});
  const set=(k:keyof CustomerPayload,v:any)=>setForm(f=>({...f,[k]:v}));

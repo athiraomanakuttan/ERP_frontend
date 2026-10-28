@@ -67,7 +67,10 @@ function AdminDashboard({ data, upcomingHolidays, firstName }: { data: AdminDash
   const { data: employees } = useQuery({ queryKey: ['dashboard-recent-employees'], queryFn: () => listEmployees({ page: 1, limit: 5 }) });
   const { data: projects } = useQuery({ queryKey: ['dashboard-projects'], queryFn: () => listProjects({ page: 1, limit: 50 }) });
   const { data: tasks } = useQuery({ queryKey: ['dashboard-tasks'], queryFn: () => listTasks({ page: 1, limit: 5 }) });
-  const { data: pendingLeaves = [] } = useQuery({ queryKey: ['dashboard-pending-leaves'], queryFn: pendingLeaveRequests });
+  const { data: pendingLeaves = [] } = useQuery({
+  queryKey: ['dashboard-pending-leaves'],
+  queryFn: () => pendingLeaveRequests()
+});
 
   const total = data?.totalEmployees ?? 0;
   const present = data?.presentEmployees ?? 0;
